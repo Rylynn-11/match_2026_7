@@ -18,12 +18,15 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../../app/drivers/oled/OLED.h"
 #include "../../app/drivers/oled/OLED_Data.h"
+#include "../../app/drivers/Servo/Servo.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -82,13 +85,16 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-OLED_Init();
+  Servo_Init();
+  OLED_Init();
+  Servo_SetAngle_Smooth(180.0f, 50.0f, 20.0f);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -98,7 +104,11 @@ OLED_Init();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    OLED_ShowChar(10,8,'A',OLED_8X16);
+    //HAL_UART_Transmit_IT(&huart1, (uint8_t *) "Hello World!\r\n", 18);
+    //HAL_Delay(1000);
+   Servo_Loop_Process();
+    //OLED_ShowChar(10,8,'A',OLED_8X16);
+    //OLED_Update();
   }
   /* USER CODE END 3 */
 }
