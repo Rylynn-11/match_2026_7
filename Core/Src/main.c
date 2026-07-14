@@ -24,8 +24,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "../../app/drivers/oled/OLED.h"
-#include "../../app/drivers/oled/OLED_Data.h"
+#include "OLED.h"
+#include "OLED_Data.h"
 #include "../../app/drivers/Servo/Servo.h"
 /* USER CODE END Includes */
 
@@ -47,6 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+//static const uint8_t bluetooth_hello[] = "Hello from STM32 HC-05\r\n";
 
 /* USER CODE END PV */
 
@@ -94,7 +95,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Servo_Init();
   OLED_Init();
-  Servo_SetAngle_Smooth(180.0f, 50.0f, 20.0f);
+  //Servo_SetAngle_Smooth(180.0f, 50.0f, 20.0f);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,11 +105,12 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    //HAL_UART_Transmit_IT(&huart1, (uint8_t *) "Hello World!\r\n", 18);
-    //HAL_Delay(1000);
-   Servo_Loop_Process();
+    HAL_UART_Transmit_IT(&huart1, "Hello from STM32 HC-05", 24);
+    HAL_Delay(1000);
+   //Servo_Loop_Process();
     //OLED_ShowChar(10,8,'A',OLED_8X16);
-    //OLED_Update();
+    OLED_DrawRectangle(0, 0, 128, 64, OLED_FILLED);
+    OLED_Update();
   }
   /* USER CODE END 3 */
 }

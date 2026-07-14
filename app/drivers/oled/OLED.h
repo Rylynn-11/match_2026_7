@@ -5,8 +5,8 @@
 #define __OLED_H
 
 #include <stdint.h>
-#include "D:\stm32\match_2026_7\app\drivers\oled/OLED_Data.h"
- 
+#include "OLED_Data.h"
+
 /*参数宏定义*********************/
 
 /*FontSize参数取值*/
