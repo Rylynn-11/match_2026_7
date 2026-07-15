@@ -7,9 +7,9 @@
 //编码器的配置结构体
 //根据编码器数量，分别配置每个编码器对应的定时器；
 //若需新增编码器，直接扩展该结构体数组即可；
-encoder_config Encoder_Config[encoder_count] = {
-    {&htim2, 0, 0},
-};
+// encoder_config Encoder_Config[encoder_count] = {
+//     {&htim2, 0, 0},
+// };
 
 void encoder_init(void) {
     uint32_t i;

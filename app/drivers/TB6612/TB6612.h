@@ -11,7 +11,7 @@
 #define motor_count 2U
 
 #include "stm32f407xx.h"
-#include "stm32f4xx_hal_tim.h"
+//#include "stm32f4xx_hal_tim.h"
 #include "tim.h"
 
 //电机运动状态枚举

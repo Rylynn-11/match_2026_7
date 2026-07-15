@@ -24,6 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "HC-SR04.h"
 #include "OLED.h"
 #include "OLED_Data.h"
 #include "../../app/drivers/Servo/Servo.h"
@@ -95,6 +96,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Servo_Init();
   OLED_Init();
+  HCSR04_Init();
+  OLED_Clear();
+  OLED_ShowString(0, 0, "HC-SR04 Ready", OLED_8X16);
+  OLED_Update();
   //Servo_SetAngle_Smooth(180.0f, 50.0f, 20.0f);
   /* USER CODE END 2 */
 
@@ -105,12 +110,30 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_UART_Transmit_IT(&huart1, "Hello from STM32 HC-05", 24);
-    HAL_Delay(1000);
+    float distance_cm = 0.0f;
+    HCSR04_StatusTypeDef hcsr04_status;
+
    //Servo_Loop_Process();
     //OLED_ShowChar(10,8,'A',OLED_8X16);
-    OLED_DrawRectangle(0, 0, 128, 64, OLED_FILLED);
+    //OLED_DrawRectangle(0, 0, 128, 64, OLED_FILLED);
+    hcsr04_status = HCSR04_ReadDistanceCm(&distance_cm);
+
+    OLED_Clear();
+    OLED_ShowString(0, 0, "HC-SR04", OLED_8X16);
+
+    if (hcsr04_status == HCSR04_OK) {
+      uint32_t distance_x10 = (uint32_t)(distance_cm * 10.0f + 0.5f);
+      OLED_Printf(0, 24, OLED_8X16, "Dist:%lu.%lucm",
+                  (unsigned long)(distance_x10 / 10U),
+                  (unsigned long)(distance_x10 % 10U));
+    } else if (hcsr04_status == HCSR04_TIMEOUT) {
+      OLED_ShowString(0, 24, "Timeout", OLED_8X16);
+    } else {
+      OLED_ShowString(0, 24, "Error", OLED_8X16);
+    }
+
     OLED_Update();
+    HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }

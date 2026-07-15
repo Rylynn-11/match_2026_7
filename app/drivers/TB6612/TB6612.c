@@ -8,10 +8,10 @@
 //电机的配置结构体
 //根据电机的数量，分别配置每个电机的定时器，通道，两个GPIO端口和引脚；
 //若需修改电机配置，直接修改该结构体，调用电机配置，也可直接调用该结构体；
-motor_config Motor_Config[motor_count] = {
-    {&htim1,TIM_CHANNEL_1,GPIOE,GPIO_PIN_7,GPIOE,GPIO_PIN_8 },
-    {&htim1,TIM_CHANNEL_2,GPIOE,GPIO_PIN_12,GPIOE,GPIO_PIN_13 },
-};
+// motor_config Motor_Config[motor_count] = {
+//     {&htim1,TIM_CHANNEL_1,GPIOE,GPIO_PIN_7,GPIOE,GPIO_PIN_8 },
+//     {&htim1,TIM_CHANNEL_2,GPIOE,GPIO_PIN_12,GPIOE,GPIO_PIN_13 },
+// };
 
 
 void motor_init(void) {

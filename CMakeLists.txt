@@ -39,7 +39,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         app/drivers/Oled/OLED_Data.h
         app/drivers/Servo/Servo.c
         app/drivers/Servo/Servo.h
-        app/drivers/TB6612/TB6612.c)
+        app/drivers/TB6612/TB6612.c
+        app/drivers/HC-SR04/HC-SR04.c
+        app/drivers/HC-SR04/HC-SR04.h
+        app/drivers/Encoder/Encoder.c)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -57,6 +60,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/Oled
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/HC-SR04
 )
 
 # Add project symbols (macros)
