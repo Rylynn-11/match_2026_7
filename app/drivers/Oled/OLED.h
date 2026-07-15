@@ -14,6 +14,11 @@
 #define OLED_8X16				8
 #define OLED_6X8				6
 
+#define OLED_UNFILLED			0
+#define OLED_FILLED				1
+
+void OLED_Init(void);
+
 /*IsFilled参数数值*/
 #define OLED_UNFILLED			0
 #define OLED_FILLED				1

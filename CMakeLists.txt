@@ -33,12 +33,13 @@ enable_language(C ASM)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME}
-        app/drivers/oled/OLED.c
-        app/drivers/oled/OLED_Data.c
-        app/drivers/oled/OLED.h
-        app/drivers/oled/OLED_Data.h
+        app/drivers/Oled/OLED.c
+        app/drivers/Oled/OLED_Data.c
+        app/drivers/Oled/OLED.h
+        app/drivers/Oled/OLED_Data.h
         app/drivers/Servo/Servo.c
-        app/drivers/Servo/Servo.h)
+        app/drivers/Servo/Servo.h
+        app/drivers/TB6612/TB6612.c)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -55,7 +56,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/oled
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/Oled
 )
 
 # Add project symbols (macros)
