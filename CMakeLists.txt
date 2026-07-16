@@ -42,6 +42,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         app/drivers/TB6612/TB6612.c
         app/drivers/HC-SR04/HC-SR04.c
         app/drivers/HC-SR04/HC-SR04.h
+        app/drivers/HC-SR04/HC-SR04_OLED.c
+        app/drivers/HC-SR04/HC-SR04_OLED.h
         app/drivers/Encoder/Encoder.c)
 
 # Add STM32CubeMX generated sources

@@ -1,6 +1,7 @@
 #include "HC-SR04.h"
 
 static uint32_t hcsr04_cycles_per_us = 0U;
+static HCSR04_StatusTypeDef hcsr04_last_status = HCSR04_ERROR;
 
 static void HCSR04_DWT_Init(void)
 {
@@ -76,6 +77,7 @@ HCSR04_StatusTypeDef HCSR04_ReadPulseUs(uint32_t *pulse_us)
     uint32_t echo_ticks;
 
     if (pulse_us == NULL) {
+        hcsr04_last_status = HCSR04_ERROR;
         return HCSR04_ERROR;
     }
 
@@ -83,24 +85,28 @@ HCSR04_StatusTypeDef HCSR04_ReadPulseUs(uint32_t *pulse_us)
     *pulse_us = 0U;
 
     if (!HCSR04_WaitPinState(GPIO_PIN_RESET, HCSR04_TIMEOUT_US)) {
+        hcsr04_last_status = HCSR04_TIMEOUT;
         return HCSR04_TIMEOUT;
     }
 
     HCSR04_SendTrigger();
 
     if (!HCSR04_WaitPinState(GPIO_PIN_SET, HCSR04_TIMEOUT_US)) {
+        hcsr04_last_status = HCSR04_TIMEOUT;
         return HCSR04_TIMEOUT;
     }
 
     echo_start = DWT->CYCCNT;
 
     if (!HCSR04_WaitPinState(GPIO_PIN_RESET, HCSR04_TIMEOUT_US)) {
+        hcsr04_last_status = HCSR04_TIMEOUT;
         return HCSR04_TIMEOUT;
     }
 
     echo_ticks = (uint32_t)(DWT->CYCCNT - echo_start);
     *pulse_us = echo_ticks / hcsr04_cycles_per_us;
 
+    hcsr04_last_status = HCSR04_OK;
     return HCSR04_OK;
 }
 
@@ -110,6 +116,7 @@ HCSR04_StatusTypeDef HCSR04_ReadDistanceCm(float *distance_cm)
     HCSR04_StatusTypeDef status;
 
     if (distance_cm == NULL) {
+        hcsr04_last_status = HCSR04_ERROR;
         return HCSR04_ERROR;
     }
 
@@ -129,6 +136,7 @@ HCSR04_StatusTypeDef HCSR04_ReadDistanceMm(float *distance_mm)
     HCSR04_StatusTypeDef status;
 
     if (distance_mm == NULL) {
+        hcsr04_last_status = HCSR04_ERROR;
         return HCSR04_ERROR;
     }
 
@@ -147,6 +155,7 @@ HCSR04_StatusTypeDef HCSR04_ReadData(HCSR04_DataTypeDef *data)
     HCSR04_StatusTypeDef status;
 
     if (data == NULL) {
+        hcsr04_last_status = HCSR04_ERROR;
         return HCSR04_ERROR;
     }
 
@@ -165,7 +174,7 @@ HCSR04_StatusTypeDef HCSR04_ReadData(HCSR04_DataTypeDef *data)
     return HCSR04_OK;
 }
 
-float HCSR04_ReadDistanceCm_Blocking(void)
+float HCSR04_GetDistanceCm(void)
 {
     float distance_cm;
 
@@ -176,7 +185,7 @@ float HCSR04_ReadDistanceCm_Blocking(void)
     return distance_cm;
 }
 
-float HCSR04_ReadDistanceMm_Blocking(void)
+float HCSR04_GetDistanceMm(void)
 {
     float distance_mm;
 
@@ -187,3 +196,17 @@ float HCSR04_ReadDistanceMm_Blocking(void)
     return distance_mm;
 }
 
+HCSR04_StatusTypeDef HCSR04_GetLastStatus(void)
+{
+    return hcsr04_last_status;
+}
+
+float HCSR04_ReadDistanceCm_Blocking(void)
+{
+    return HCSR04_GetDistanceCm();
+}
+
+float HCSR04_ReadDistanceMm_Blocking(void)
+{
+    return HCSR04_GetDistanceMm();
+}

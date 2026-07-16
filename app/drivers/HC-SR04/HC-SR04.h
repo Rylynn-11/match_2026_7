@@ -38,6 +38,9 @@ HCSR04_StatusTypeDef HCSR04_ReadPulseUs(uint32_t *pulse_us);
 HCSR04_StatusTypeDef HCSR04_ReadDistanceCm(float *distance_cm);
 HCSR04_StatusTypeDef HCSR04_ReadDistanceMm(float *distance_mm);
 HCSR04_StatusTypeDef HCSR04_ReadData(HCSR04_DataTypeDef *data);
+float HCSR04_GetDistanceCm(void);
+float HCSR04_GetDistanceMm(void);
+HCSR04_StatusTypeDef HCSR04_GetLastStatus(void);
 float HCSR04_ReadDistanceCm_Blocking(void);
 float HCSR04_ReadDistanceMm_Blocking(void);
 
