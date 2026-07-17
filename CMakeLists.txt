@@ -44,7 +44,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         app/drivers/HC-SR04/HC-SR04.h
         app/drivers/HC-SR04/HC-SR04_OLED.c
         app/drivers/HC-SR04/HC-SR04_OLED.h
-        app/drivers/Encoder/Encoder.c)
+        app/drivers/Encoder/Encoder.c
+        app/drivers/IMU/icm42688p.c
+        app/algorithms/IMU_RC/imu_fusion.c
+        app/services/IMU_service/app_imu.c)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -54,15 +57,13 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
 )
 
-# Add sources to executable
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user sources here
-)
-
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/Oled
         ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/HC-SR04
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/drivers/IMU
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/algorithms/IMU_RC
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/services/IMU_service
 )
 
 # Add project symbols (macros)

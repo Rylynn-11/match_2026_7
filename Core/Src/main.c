@@ -18,15 +18,15 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
+#include "spi.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "HC-SR04_OLED.h"
-#include "OLED.h"
-#include "../../app/drivers/Servo/Servo.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +47,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-//static const uint8_t bluetooth_hello[] = "Hello from STM32 HC-05\r\n";
 
 /* USER CODE END PV */
 
@@ -90,14 +89,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_SPI1_Init();
   MX_USART1_UART_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  Servo_Init();
-  OLED_Init();
-  HCSR04_OLED_Init();
-  //Servo_SetAngle_Smooth(180.0f, 50.0f, 20.0f);
-  /* USER CODE END 2 */
+
+/* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -106,12 +104,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-   //Servo_Loop_Process();
-    //OLED_ShowChar(10,8,'A',OLED_8X16);
-    //OLED_DrawRectangle(0, 0, 128, 64, OLED_FILLED);
-    HCSR04_OLED_Process();
+
+    /* USER CODE END 3 */
   }
-  /* USER CODE END 3 */
 }
 
 /**

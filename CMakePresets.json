@@ -1,27 +1,33 @@
 {
     "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 22,
+        "patch": 0
+    },
     "configurePresets": [
         {
-            "name": "default",
-            "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
-		    "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
-            "cacheVariables": {
-            }
-        },
-        {
             "name": "Debug",
-            "inherits": "default",
+            "displayName": "Debug STM32",
+            "description": "Configure STM32 Debug build with STM32CubeCLT GCC and Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/cmake-build-debug-stm32",
+            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_MAKE_PROGRAM": "C:/ST/STM32CubeCLT_1.22.0/Ninja/bin/ninja.exe"
             }
         },
         {
             "name": "Release",
-            "inherits": "default",
+            "displayName": "Release STM32",
+            "description": "Configure STM32 Release build with STM32CubeCLT GCC and Ninja",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/cmake-build-release-stm32",
+            "toolchainFile": "${sourceDir}/cmake/gcc-arm-none-eabi.cmake",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_MAKE_PROGRAM": "C:/ST/STM32CubeCLT_1.22.0/Ninja/bin/ninja.exe"
             }
         }
     ],
